@@ -4,6 +4,9 @@
 			<img class="card-img-top" th:src="${promo.linkImagem}" alt="Card image cap">
 		</div>
 		<div class="card-body">
+			<div>
+				<p class="card-subtitle mb-2 text-muted" tH:text="${#strings.abbreviate(promo.titulo, 40)}">Titulo</p>
+			</div>
 			<h5 class="card-title" th:text="${promo.site}">site.com.br</h5>
 			<p class="card-text" th:text="${promo.descricao}">sobre a promoção</p>
 			<div>
