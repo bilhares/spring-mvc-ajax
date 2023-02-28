@@ -19,12 +19,13 @@ $(window).scroll(function() {
 });
 
 function loadByScrollBar(pageNumber) {
-
+	var site = $("#autocomplete-input").val();
 	$.ajax({
 		method : "GET",
 		url : "/promocao/list/ajax",
 		data : {
-			page : pageNumber
+			page : pageNumber,
+			site : site
 		},
 		beforeSend : function() {
 			$("#loader-img").show();
@@ -62,4 +63,47 @@ $(document).on("click", "button[id*='likes-btn-']", function() {
 			alert("Ops ocorreu um erro " + xhr.status + " - " + xhr.statusText)
 		}
 	})
+});
+
+// autocomplete
+$("#autocomplete-input").autocomplete({
+	source : function(req, resp) {
+		$.ajax({
+			method : "GET",
+			url : "/promocao/site",
+			data : {
+				termo : req.term
+			},
+			success : function(result) {
+				resp(result);
+			}
+		});
+	}
+});
+
+// botao confirmar
+$("#autocomplete-submit").on("click", function() {
+	var site = $("#autocomplete-input").val();
+	$.ajax({
+		method : "GET",
+		url : "/promocao/site/list",
+		data : {
+			site : site
+		},
+		beforeSend : function() {
+			pageNumber = 0;
+			$("#fim-btn").hide();
+			$(".row").fadeOut(400, function() {
+				$(this).empty();
+			});
+		},
+		success : function(resp) {
+			$(".row").fadeIn(250, function() {
+				$(this).append(resp);
+			})
+		},
+		error : function(xhr) {
+			alert("Ops ocorreu um erro " + xhr.status + " - " + xhr.statusText)
+		}
+	});
 });
