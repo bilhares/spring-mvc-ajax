@@ -10,6 +10,9 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" />
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css" />
+
 </head>
 <body>
 	<header>
@@ -28,7 +31,7 @@
 						<a class="nav-link" th:href="@{/promocao/list}">Promoções</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">Tabela de Promoções</a>
+						<a class="nav-link" th:href="@{/promocao/tabela}">Tabela de Promoções</a>
 					</li>
 				</ul>
 			</div>
@@ -47,6 +50,8 @@
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+	<script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
 
 	<!-- 	MEUS JS -->
 	<script th:replace=":: js"></script>
