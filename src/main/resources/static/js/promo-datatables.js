@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	moment.locale("pt-br");
 
 	$("#table-server").DataTable({
 		processing : true,
@@ -34,11 +35,15 @@ $(document).ready(function() {
 				return formatText(text);
 			}
 		}, {
-			data : "preco"
+			data : "preco",
+			render : $.fn.dataTable.render.number('.', ',', 2, 'R$')
 		}, {
 			data : "likes"
 		}, {
-			data : "dtCadastro"
+			data : "dtCadastro",
+			render : function(text) {
+				return moment(text).format("LLL");
+			}
 		}, {
 			data : "categoria.titulo"
 		} ]
