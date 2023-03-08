@@ -83,16 +83,48 @@ $(document).ready(function() {
 	});
 
 	$("#btn-editar").on("click", function() {
-		var id = table.row(table.$("tr.selected")).data().id;
-		console.log("id " + id);
+		if (isSelectedRow()) {
+			$("#modal-form").modal("show");
+			var id = getPromoId();
+			console.log("editar id " + id);
+		}
 	});
 
 	$("#btn-excluir").on("click", function() {
-		console.log("excluir");
+		if (isSelectedRow()) {
+			$("#modal-delete").modal("show");
+			var id = getPromoId();
+			console.log("excluir id " + id);
+		}
+	});
+
+	$("#btn-del-modal").on("click", function() {
+		var id = getPromoId();
+
+		$.ajax({
+			method : "GET",
+			url : "/promocao/delete/" + id,
+			success : function() {
+				$("#modal-delete").modal("hide");
+				table.ajax.reload();
+			},
+			error : function(xhr) {
+				alert("Ops ocorreu um erro " + xhr.status + " - " + xhr.statusText)
+			}
+		});
 	});
 
 	function formatText(text) {
 		return text != "" && text.length >= 40 ? text.substring(0, 40) + "..." : text
+	}
+
+	function getPromoId() {
+		return table.row(table.$("tr.selected")).data().id;
+	}
+
+	function isSelectedRow() {
+		var trow = table.row(table.$("tr.selected"));
+		return trow.data() != undefined;
 	}
 
 });
