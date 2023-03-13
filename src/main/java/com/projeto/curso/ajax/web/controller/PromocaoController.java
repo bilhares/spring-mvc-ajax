@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.projeto.curso.ajax.domain.Categoria;
 import com.projeto.curso.ajax.domain.Promocao;
+import com.projeto.curso.ajax.dto.PromocaoDTO;
 import com.projeto.curso.ajax.repository.CategoriaRepository;
 import com.projeto.curso.ajax.repository.PromocaoRepository;
 import com.projeto.curso.ajax.service.PromocaoDataTablesService;
@@ -134,4 +135,33 @@ public class PromocaoController {
 		return ResponseEntity.ok().build();
 	}
 
+	@GetMapping("/edit/{id}")
+	public ResponseEntity<?> preEditarPromocao(@PathVariable("id") Long id) {
+		Promocao promocao = promocaoRepository.findById(id).get();
+		return ResponseEntity.ok(promocao);
+	}
+
+	@PostMapping("/edit")
+	public ResponseEntity<?> editarPromoca(@Valid PromocaoDTO dto, BindingResult result) {
+
+		if (result.hasErrors()) {
+			Map<String, String> errors = new HashMap<String, String>();
+			for (FieldError error : result.getFieldErrors()) {
+				errors.put(error.getField(), error.getDefaultMessage());
+			}
+
+			return ResponseEntity.unprocessableEntity().body(errors);
+		}
+
+		Promocao promo = promocaoRepository.findById(dto.getId()).get();
+		promo.setCategoria(dto.getCategoria());
+		promo.setDescricao(dto.getDescricao());
+		promo.setLinkImagem(dto.getLinkImagem());
+		promo.setPreco(dto.getPreco());
+		promo.setTitulo(dto.getTitulo());
+
+		promocaoRepository.save(promo);
+
+		return ResponseEntity.ok().build();
+	}
 }
